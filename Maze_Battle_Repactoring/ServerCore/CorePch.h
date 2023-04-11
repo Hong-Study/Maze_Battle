@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Types.h"
 #include <vector>
 #include <list>
 #include <queue>
@@ -23,10 +22,18 @@ using namespace std;
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
-#include "ThreadManager.h"
+#include "Types.h"
+#include "Container.h"
 #include "CoreMacro.h"
-#include "Address.h"
+#include "Global.h"
+#include "Allocator.h"
 #include "SocketUtils.h"
-#include "PacketBuffer.h"
-#include "PacketHelper.h"
+#include "ThreadManager.h"
+#include "Memory.h"
 
+#include "Address.h"
+#include "Session.h"
+#include "BufferWriter.h"
+#include "BufferReader.h"
+#include "SendBuffer.h"
+#include "PacketType.h"

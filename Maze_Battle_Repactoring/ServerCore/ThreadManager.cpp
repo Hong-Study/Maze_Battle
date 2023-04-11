@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "ThreadManager.h"
 
+void ThreadManager::Init()
+{
+
+}
+
 void ThreadManager::Push(function<void()> f)
 {
 	_threads.emplace_back(f);

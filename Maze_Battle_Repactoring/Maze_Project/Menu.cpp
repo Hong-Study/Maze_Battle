@@ -7,7 +7,7 @@
 Menu::Menu(QGraphicsView* view)
 	: _view(view)
 {
-	NETWORK->Init(1);
+	NETWORK->Init();
 
 	Set_Menu();
 
@@ -129,62 +129,32 @@ void Menu::Loby_Init()
 }
 
 
-void Menu::Start_Game()
-{
-	int _size = Networking::user.loby.Level;
-	int _trap = _size * 5;
-	_size *= 10;
-	_size += 1;
-
-	Networking::user.loby.GameStart = true;
-
-	if (Networking::user.loby.Type == 1) {
-		send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
-	}
-	if (Networking::user.loby.Enemy) {
-		board = new Board(_size, _trap);
-
-		Windows_setting(_size * (Consts::BOARD_IMAGE_SIZE + 1), _size * (Consts::BOARD_IMAGE_SIZE + 1) + 30);
-		_view->setScene(board);
-		_view->setAlignment(Qt::AlignTop);
-		_view->update();
-	}
-}
-
-void Menu::Recv_Data()
-{
-	for (int i = 0; i < 10; i++) {
-		_Loby_Label[i]->setText("");
-		_Input_Button[i]->hide();
-	}
-
-	int retVal = ::send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
-
-	if (retVal == SOCKET_ERROR)
-		Networking::err_quit("Send");
-	int i = 0, size = 0;
-
-	while (1) {
-		::recv(Networking::user.socket, reinterpret_cast<char*>(&size), sizeof(int), 0);
-		if (size == 0)
-			break;
-		retVal = ::recv(Networking::user.socket, reinterpret_cast<char*>(&tmp), size, 0);
-		if (retVal == SOCKET_ERROR)
-			Networking::err_quit("Recv");
-		char str[40];
-		sprintf_s(str, "%d, LEVEL : %d, NAME : %s", tmp.RoomNumber, tmp.Level, tmp.name.c_str());
-
-		qDebug() << str << endl;
-		_Loby_Label[i]->setText(str);
-		if(!tmp.GameStart)
-			_Input_Button[i]->show();
-		i++;
-	}
-}
+//void Menu::Start_Game()
+//{
+//	int _size = Networking::user.loby.Level;
+//	int _trap = _size * 5;
+//	_size *= 10;
+//	_size += 1;
+//
+//	Networking::user.loby.GameStart = true;
+//
+//	if (Networking::user.loby.Type == 1) {
+//		send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
+//	}
+//	if (Networking::user.loby.Enemy) {
+//		board = new Board(_size, _trap);
+//
+//		Windows_setting(_size * (Consts::BOARD_IMAGE_SIZE + 1), _size * (Consts::BOARD_IMAGE_SIZE + 1) + 30);
+//		_view->setScene(board);
+//		_view->setAlignment(Qt::AlignTop);
+//		_view->update();
+//	}
+//}
 
 void Menu::InSide_Room(int i)
 {
 	disconnect(Connect);
+
 	Connect = QGraphicsScene::connect(&_button2, SIGNAL(clicked()), this, SLOT(Loby_Show()));
 	Connect = QGraphicsScene::connect(this, SIGNAL(start()), this, SLOT(Start_Game()));
 
@@ -271,20 +241,6 @@ void Menu::Show_Menu()
 	Networking::Close();
 
 	Set_Menu();
-}
-
-void Menu::Socket_init()
-{
-	Networking::user.socket = socket(AF_INET, SOCK_STREAM, 0);
-	if (Networking::user.socket == INVALID_SOCKET) {
-		Networking::err_quit("CreateSocket()");
-	}
-
-	ZeroMemory(&Networking::user.sockaddr, sizeof(sockaddr));
-
-	Networking::user.sockaddr.sin_family = AF_INET;
-	Networking::user.sockaddr.sin_port = ::htons(PORT);
-	Networking::user.sockaddr.sin_addr.s_addr = ::inet_addr(SERVERIP);
 }
 
 void Menu::Create_Thread()

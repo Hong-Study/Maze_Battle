@@ -8,6 +8,7 @@ class ThreadManager
 	SINGLETON(ThreadManager);
 
 public:
+	void Init();
 	void Push(function<void()> f);
 	void Join();
 

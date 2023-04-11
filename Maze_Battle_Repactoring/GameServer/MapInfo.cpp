@@ -1,15 +1,16 @@
 #include "pch.h"
-#include "CreateMap.h"
+#include "MapInfo.h"
 #include <random>
-CreateMap::CreateMap(int n)
+MapInfo::MapInfo(int32 n)
 {
 	_size = (n * 10) + 1;
 	_trap = n * 5;
 
-	_board = new Node *[_size];
+	_board.resize(_size);
 	for (int i = 0; i < _size; i++) {
-		_board[i] = new Node[_size];
+		_board[i].resize(_size);
 	}
+
 	GetnarateByBinaryTree();
 	Make_Trap();
 	
@@ -21,15 +22,12 @@ CreateMap::CreateMap(int n)
 	}
 }
 
-CreateMap::~CreateMap()
+MapInfo::~MapInfo()
 {
-	for (int i = 0; i < _size; i++) {
-		delete _board[i];
-	}
-	delete _board;
+	
 }
 
-void CreateMap::GetnarateByBinaryTree()
+void MapInfo::GetnarateByBinaryTree()
 {
 	//ÃÊ±â¸Ê ¼³Á¤
 	for (int y = 0; y < _size; y++) {
@@ -49,7 +47,7 @@ void CreateMap::GetnarateByBinaryTree()
 	_board[1][1].type = TileType::USER;
 }
 
-void CreateMap::RecursiveBackTracking(int y, int x)
+void MapInfo::RecursiveBackTracking(int y, int x)
 {
 	int r, nx, ny;
 	int directions[5] = {
@@ -76,7 +74,7 @@ void CreateMap::RecursiveBackTracking(int y, int x)
 		}
 	}
 }
-void CreateMap::Make_Trap() {
+void MapInfo::Make_Trap() {
 	int x, y;
 
 	while (_trap > 0) {
@@ -98,7 +96,7 @@ void CreateMap::Make_Trap() {
 		}
 	}
 }
-int CreateMap::check(int y, int x)
+int MapInfo::check(int y, int x)
 {
 	if (TileType::Empty == _board[y][x].type)
 		return 1;
@@ -107,12 +105,12 @@ int CreateMap::check(int y, int x)
 	else
 		return 0;
 }
-int CreateMap::inRange(int y, int x)
+int MapInfo::inRange(int y, int x)
 {
 	return (y > 0 && y < _size - 1) && (x > 0 && x < _size - 1);
 }
 
-int CreateMap::rand(int a, int b)
+int MapInfo::rand(int a, int b)
 {
 	std::random_device rd;
 
@@ -124,7 +122,7 @@ int CreateMap::rand(int a, int b)
 
 	return dis(gen);
 }
-void CreateMap::Setting_Lighting(int y, int x, bool m)
+void MapInfo::Setting_Lighting(int y, int x, bool m)
 {
 	for (int i = 0; i < _size; i++) {
 		for (int j = 0; j < _size; j++) {
@@ -134,7 +132,7 @@ void CreateMap::Setting_Lighting(int y, int x, bool m)
 	}
 }
 
-void CreateMap::shuffleArray(int* array, int size)
+void MapInfo::shuffleArray(int* array, int size)
 {
 	int i, r, temp;
 	for (i = 0; i < (size - 1); ++i)

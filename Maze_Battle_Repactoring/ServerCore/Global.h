@@ -1,3 +1,3 @@
 #pragma once
 
-extern class ThreadManager* GThread;
+extern class Memory* GMemory;

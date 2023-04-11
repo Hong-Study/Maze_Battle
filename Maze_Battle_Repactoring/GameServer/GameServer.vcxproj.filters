@@ -21,7 +21,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="CreateMap.cpp">
+    <ClCompile Include="MapInfo.cpp">
       <Filter>CreateMap</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
@@ -30,12 +30,18 @@
     <ClCompile Include="ServerSession.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Macro.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CreateMap.h">
+    <ClInclude Include="MapInfo.h">
       <Filter>CreateMap</Filter>
     </ClInclude>
     <ClInclude Include="Consts.h">
@@ -44,11 +50,14 @@
     <ClInclude Include="Room.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="ServerSession.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

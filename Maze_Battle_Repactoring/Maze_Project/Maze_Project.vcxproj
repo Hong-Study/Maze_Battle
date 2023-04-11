@@ -60,6 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <IncludePath>D:\qt\5.15.0\msvc2019_64;$(SolutionDir)ServerCore\;D:\qt\5.15.0\msvc2019_64\mkspecs;D:\qt\5.15.0\msvc2019_64\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\;D:\qt\5.15.0\msvc2019_64\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <IncludePath>D:\qt\5.15.0\msvc2019_64;$(SolutionDir)ServerCore\;D:\qt\5.15.0\msvc2019_64\mkspecs;D:\qt\5.15.0\msvc2019_64\include;$(IncludePath)</IncludePath>
@@ -115,6 +116,7 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="GameSession.cpp" />
+    <ClCompile Include="Macro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
@@ -125,9 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSession.h" />
-    <QtMoc Include="Board.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Consts.h" />
     <QtMoc Include="Menu.h" />
+    <ClInclude Include="Macro.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="pch.h" />

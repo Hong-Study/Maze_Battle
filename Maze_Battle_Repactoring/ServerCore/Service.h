@@ -7,7 +7,7 @@ class Service : public enable_shared_from_this<Service>
 {
 public:
 	Service(Address addr, SessionFactory factory);
-	virtual ~Service() { _sessions.clear(); _wsaEvents.clear(); }
+	virtual ~Service() { }
 
 	void SessionSetting(SessionRef session, SOCKET socket, Address& addr, WSAEVENT event);
 	virtual void Start() abstract;
@@ -15,9 +15,6 @@ public:
 protected:
 	SessionFactory		_factory;
 	Address				_addr;
-
-	vector<SessionRef>	_sessions;
-	vector<WSAEVENT>	_wsaEvents;
 };
 
 class ClientService : public Service
@@ -26,9 +23,16 @@ class ClientService : public Service
 public:
 	ClientService(Address addr, SessionFactory factory);
 	virtual ~ClientService() { }
-
-	void Connect(const int32 count);
+	void Connect();
 	virtual void Start() override;
+
+	int32 Send(SendBufferRef buf);
+private:
+	void Close();
+
+private:
+	SessionRef _session;
+	WSAEVENT _event;
 };
 
 class ServerService : public Service
@@ -36,8 +40,14 @@ class ServerService : public Service
 	using Super = Service;
 public:
 	ServerService(Address addr, SessionFactory factory);
-	virtual ~ServerService() { }
+	virtual ~ServerService() { _sessions.clear(); _wsaEvents.clear(); }
 
 	void Listen();
 	virtual void Start() override;
+
+private:
+	void Disconnect(int32 index);
+
+	vector<SessionRef>	_sessions;
+	vector<WSAEVENT>	_wsaEvents;
 };

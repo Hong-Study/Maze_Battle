@@ -5,7 +5,7 @@ RecvBuffer::RecvBuffer(int32 size)
 	: _bufferSize(size)
 {
 	_capacity = _bufferSize * BUFFER_COUNT;
-	_buffer.reserve(_capacity);
+	_buffer.resize(_capacity);
 }
 
 void RecvBuffer::Clean()

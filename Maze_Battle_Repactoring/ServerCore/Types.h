@@ -13,8 +13,9 @@ using uint16 = unsigned __int16;
 using uint32 = unsigned __int32;
 using uint64 = unsigned __int64;
 
-using SessionRef = std::shared_ptr<class Session>;
-using ServiceRef = std::shared_ptr<class Service>;
-using ServerServiceRef = std::shared_ptr<class ServerService>;
-using ClientServiceRef = std::shared_ptr<class ClientService>;
-using PacketBufferRef = std::shared_ptr<class PacketBuffer>;
+using SessionRef			= std::shared_ptr<class Session>;
+using ServiceRef			= std::shared_ptr<class Service>;
+using ServerServiceRef		= std::shared_ptr<class ServerService>;
+using ClientServiceRef		= std::shared_ptr<class ClientService>;
+using SendBufferRef			= std::shared_ptr<class SendBuffer>;
+using SendBufferChunkRef	= std::shared_ptr<class SendBufferChunk>;

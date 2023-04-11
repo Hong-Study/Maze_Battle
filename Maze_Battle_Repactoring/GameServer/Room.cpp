@@ -1,62 +1,59 @@
 #include "pch.h"
 #include "Room.h"
+#include "ObjectPool.h"
+#include "MapInfo.h"
 
-vector<int> Room::HostRoom;
-int Room::ClientRoom[WSA_MAXIMUM_WAIT_EVENTS];
-int Room::ClientSize = 0;
-CreateMap* Room::GameMaps[WSA_MAXIMUM_WAIT_EVENTS];
 //초기화
 void Room::Init()
 {
-    fill_n(ClientRoom, WSA_MAXIMUM_WAIT_EVENTS, -1);
+   
 }
 
 //방 생성시
-bool Room::PushHost(int Index)
+bool Room::PushHost(int32 index)
 {
-    if (HostRoom.size() >= WSA_MAXIMUM_WAIT_EVENTS || Index >= WSA_MAXIMUM_WAIT_EVENTS)
+    if (CheckIndex(index))
         return false;
-    HostRoom.push_back(Index);
+
+    _rooms[index] = -1;
+    _gameMaps[index] = ObjectPool<MapInfo>::MakeShared(10);
     return true;
 }
 
 //방 입장시
-bool Room::PushClient(int Who, int Index)
+bool Room::PushClient(int32 who, int32 index)
 {
-    if (ClientSize >= WSA_MAXIMUM_WAIT_EVENTS || Index >= WSA_MAXIMUM_WAIT_EVENTS)
+    if (!CheckIndex(index))
         return false;
-    ClientRoom[Who] = Index;
-    ++ClientSize;
+    _rooms[index] = who;
     return true;
 }
 
 //방 삭제시
-bool Room::DeleteHost(int Index)
+bool Room::DeleteHost(int32 index)
 {
-    if (Index > HostRoom.size())
+    if (!CheckIndex(index))
         return false;
-    if (HostRoom[Index] == -1)
-        return false;
-    HostRoom.erase(HostRoom.begin() + Index);
-    DeleteClient(Index);
 
+    _rooms.erase(index);
+
+    _gameMaps[index] = nullptr;
+    _gameMaps.erase(index);
     return true;
 }
 
-//방 나갈때
-bool Room::DeleteClient(int Index)
+bool Room::CheckIndex(int32 index)
 {
-    if (ClientRoom[Index] == -1)
-        return false;
-    ClientRoom[Index] = -1;
-    --ClientSize;
-    return true;
-}
-
-bool Room::CheckIndex(int Index)
-{
-    if(Index >= HostRoom.size())
+    if (_rooms.find(index) == _rooms.end())
         return false;
     
     return true;
+}
+
+shared_ptr<class MapInfo> Room::GetMapIndex(int32 index)
+{
+    if (!CheckIndex(index))
+        return nullptr;
+   
+    return _gameMaps[index];
 }

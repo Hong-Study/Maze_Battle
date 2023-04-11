@@ -1,28 +1,21 @@
 #pragma once
 #include "pch.h"
-#include "CreateMap.h"
 
 class Room
 {
-public:
-	static void Init();
-	
-	static bool PushHost(int Index);
-	static bool PushClient(int Who, int Index);
-	static bool DeleteHost(int Index);
-	static bool DeleteClient(int Index);
-	static bool CheckIndex(int Index);
+	SINGLETON(Room)
 
-	static int GetHostIndex(int Index) { return HostRoom[Index]; }
-	static int GetClientIndex(int Index) { return ClientRoom[Index]; }
-	static int GetHostSize() { return HostRoom.size(); }
-	static int GetCientSize() { return ClientSize; }
+public:
+	void Init();
+	
+	bool PushHost(int32 index);
+	bool PushClient(int32 who, int32 index);
+	bool DeleteHost(int32 index);
+	bool CheckIndex(int32 index);
+
+	shared_ptr<class MapInfo> GetMapIndex(int32 index);
 
 private:
-	static vector<int> HostRoom;
-	static int ClientRoom[WSA_MAXIMUM_WAIT_EVENTS];
-	static int ClientSize;
-
-public:
-	static CreateMap* GameMaps[WSA_MAXIMUM_WAIT_EVENTS];
+	map<int32, int32> _rooms;
+	map<int32, shared_ptr<class MapInfo>> _gameMaps;
 };

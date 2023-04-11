@@ -4,13 +4,13 @@
 
 function<SessionRef(void)> factory = make_shared<GameSession>;
 
-void NetworkManager::Init(int users)
+void NetworkManager::Init()
 {
 	SocketUtils::Init();
 
 	service = make_shared<ClientService>(Address(L"127.0.0.1", 5000), factory);
 
-	service->Connect(users);
+	service->Connect();
 
 	service->Start();
 }

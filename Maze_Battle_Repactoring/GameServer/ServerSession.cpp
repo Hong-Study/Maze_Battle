@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ServerSession.h"
+#include "PacketHandler.h"
 
 ServerSession::ServerSession()
 {
@@ -13,24 +14,23 @@ ServerSession::~ServerSession()
 
 void ServerSession::OnConnected()
 {
-	string str = "Hello World";
-	cout << Send(reinterpret_cast<const BYTE*>(str.c_str()), str.length()) << endl;
+
 }
 
 void ServerSession::OnDisconnected()
 {
 }
 
-int32 ServerSession::OnSend(const BYTE* buffer, int32 len)
+int32 ServerSession::OnSend(BYTE* buffer, int32 len)
 {
-	const char* str = reinterpret_cast<const char*>(buffer);
-	cout << "OnSend : " << str << " / " << len << endl;
+	
+	return len;
 }
 
-int32 ServerSession::OnRecv(BYTE* buffer, int32 len)
+int32 ServerSession::OnRecvPacket(BYTE* buffer, int32 len)
 {
-    cout << "Recv : " << len << endl;
+	if (PacketHandler::Dispatch(buffer, len, shared_from_this()) == false)
+		return SOCKET_ERROR;
 
-    //게임 시작
-    
+	return len;
 }

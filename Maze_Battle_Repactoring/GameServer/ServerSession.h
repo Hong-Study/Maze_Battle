@@ -1,16 +1,7 @@
 #pragma once
 #include <Session.h>
 
-struct Loby_Data {
-	PlayerState Type;
-	uint16 Level;
-	uint16 RoomNumber;
-	bool GameStart;
-	bool Win;
-	std::string name;
-};
-
-class ServerSession : public Session
+class ServerSession : public PacketSession
 {
 	using Super = Session;
 public:
@@ -19,8 +10,8 @@ public:
 
 	virtual void OnConnected() override;
 	virtual void OnDisconnected() override;
-	virtual int32 OnSend(const BYTE* buffer, int32 len) override;
-	virtual int32 OnRecv(BYTE* buffer, int32 len) override;
+	virtual int32 OnSend(BYTE* buffer, int32 len) override;
+	virtual int32 OnRecvPacket(BYTE* buffer, int32 len) override;
 };
 
 

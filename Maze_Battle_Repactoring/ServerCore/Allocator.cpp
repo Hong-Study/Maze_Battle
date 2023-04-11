@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Allocator.h"
+#include "Memory.h"
 
 void* StompAllocator::Alloc(int32 size)
 {
@@ -18,9 +19,11 @@ void StompAllocator::Release(void* ptr)
 
 void* PoolAllocator::Alloc(int32 size)
 {
-	return nullptr;
+	void* ptr = GMemory->Allocate(size);
+	return ptr;
 }
 
 void PoolAllocator::Release(void* ptr)
 {
+	GMemory->Release(ptr);
 }

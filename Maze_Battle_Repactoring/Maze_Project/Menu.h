@@ -8,11 +8,14 @@
 
 class Menu : public QGraphicsScene{
 	Q_OBJECT
+
+	SINGLETON(Menu)
 private:
+	void Init();
 	QGraphicsView* _view;
 
 	//게임 판
-	Board* board;
+	//Board* board;
 
 	//화면들 
 	QGraphicsScene Loby;
@@ -29,7 +32,6 @@ public:
 
 private:
 	//초기화 부분
-	void Socket_init();
 	void Set_Loby();
 	void Set_Room();
 	void Set_Menu();
@@ -61,6 +63,7 @@ private slots:
 
 	//로비 정보 받기
 	void Recv_Data();
+
 private:
 	//게임 시작할때 정보
 	QLineEdit _Level_INPUT;

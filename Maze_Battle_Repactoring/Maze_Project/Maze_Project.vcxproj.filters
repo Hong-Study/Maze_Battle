@@ -37,6 +37,9 @@
     <ClCompile Include="NetworkManager.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="Macro.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -57,11 +60,14 @@
     <ClInclude Include="NetworkManager.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Board.h">
-      <Filter>GamePlay</Filter>
-    </QtMoc>
     <QtMoc Include="Menu.h">
       <Filter>GamePlay</Filter>
     </QtMoc>

@@ -6,7 +6,7 @@ class NetworkManager
 	SINGLETON(NetworkManager)
 
 public:
-	void Init(int users);
+	void Init();
 	void Start();
 
 	ClientServiceRef GetService() { return service; }

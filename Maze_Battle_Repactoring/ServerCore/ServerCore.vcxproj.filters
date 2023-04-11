@@ -42,18 +42,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="PacketBuffer.cpp">
-      <Filter>Packet</Filter>
-    </ClCompile>
-    <ClCompile Include="PacketHelper.cpp">
-      <Filter>Packet</Filter>
-    </ClCompile>
-    <ClCompile Include="SendBuffer.cpp">
-      <Filter>Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="RecvBuffer.cpp">
-      <Filter>Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="Allocator.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
@@ -71,6 +59,24 @@
     </ClCompile>
     <ClCompile Include="Global.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="RecvBuffer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferReader.cpp">
+      <Filter>Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferWriter.cpp">
+      <Filter>Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SendBuffer.cpp">
+      <Filter>Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketList.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketType.cpp">
+      <Filter>Packet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,18 +104,6 @@
     <ClInclude Include="pch.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="PacketBuffer.h">
-      <Filter>Packet</Filter>
-    </ClInclude>
-    <ClInclude Include="PacketHelper.h">
-      <Filter>Packet</Filter>
-    </ClInclude>
-    <ClInclude Include="SendBuffer.h">
-      <Filter>Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="RecvBuffer.h">
-      <Filter>Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="Allocator.h">
       <Filter>Memory</Filter>
     </ClInclude>
@@ -122,13 +116,31 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="TypeCast.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadManager.h">
       <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="Global.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="RecvBuffer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferReader.h">
+      <Filter>Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferWriter.h">
+      <Filter>Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBuffer.h">
+      <Filter>Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketList.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketType.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
       <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>

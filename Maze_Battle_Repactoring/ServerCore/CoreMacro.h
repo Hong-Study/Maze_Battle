@@ -44,9 +44,13 @@ private:												\
 	~classname() {}										\
 public:													\
 	static classname* GetInstance() {					\
-		static classname thread;						\
-		return &thread;									\
+		static classname instance;						\
+		instance.Init();								\
+		return &instance;								\
 	}													\
 
 #define GET_SINGLE(classname)	classname::GetInstance()
+
 #define THREAD					GET_SINGLE(ThreadManager)
+#define MEMORY					GET_SINGLE(Memory)
+#define SENDBUF					GET_SINGLE(SendBufferPool)

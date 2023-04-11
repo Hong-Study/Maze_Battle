@@ -2,20 +2,20 @@
 #include "Address.h"
 #include "RecvBuffer.h"
 
-class Session : enable_shared_from_this<Session>
+class Session : public enable_shared_from_this<Session>
 {
 public:
 	Session() : _recvBuffer(1024) {  }
 	virtual ~Session();
 
-	int32			Send(const BYTE* buffer, int32 len);
+	int32			Send(SendBufferRef buffer);
 	int32			Recv();
 	void			Disconnect();
 
-	virtual void	OnConnected() abstract;
-	virtual void	OnDisconnected() abstract;
-	virtual int32	OnSend(const BYTE* buffer, int32 len) abstract;
-	virtual int32	OnRecv(BYTE* buffer, int32 len) abstract;
+	virtual void	OnConnected() { }
+	virtual void	OnDisconnected() { }
+	virtual int32	OnSend(BYTE* buffer, int32 len) { return len; }
+	virtual int32	OnRecv(BYTE* buffer, int32 len) { return len; }
 	
 public:
 	SOCKET			GetSocket() { return _socket; }
@@ -26,13 +26,23 @@ public:
 	void			SetAddr(Address addr) { _addr = addr; }
 	ServiceRef		GetService() { return _serviceRef; }
 	void			SetService(ServiceRef ref) { _serviceRef = ref; }
-
+	bool			IsConnected() { return _socket != SOCKET_ERROR; }
 private:
-	SOCKET		_socket;
-	WSAEVENT	_event = 0;
-	Address		_addr;
-	ServiceRef	_serviceRef;
+	SOCKET			_socket = SOCKET_ERROR;
+	WSAEVENT		_event = 0;
+	Address			_addr;
+	ServiceRef		_serviceRef;
+	RecvBuffer		_recvBuffer;
+	SendBufferRef	_sendBufferRef;
+};
 
-	int32		_recvLen = 0;
-	RecvBuffer	_recvBuffer;
+class PacketSession : public Session
+{
+public:
+	PacketSession() { }
+	~PacketSession() { }
+
+protected:
+	virtual int32 OnRecv(BYTE* buffer, int32 len) sealed;
+	virtual int32 OnRecvPacket(BYTE* buffer, int32 len) abstract = 0;
 };
