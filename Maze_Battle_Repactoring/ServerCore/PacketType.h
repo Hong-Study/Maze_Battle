@@ -24,6 +24,8 @@ struct S_LobyInside
 	struct LobyInfo
 	{
 		uint32 id;
+
+		string name;
 	};
 
 	uint16 offset;
@@ -31,7 +33,7 @@ struct S_LobyInside
 };
 
 struct C_LobyInside
-{
+{	
 	uint16 id;
 };
 
