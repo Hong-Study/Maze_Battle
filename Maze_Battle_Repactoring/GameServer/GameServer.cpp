@@ -8,8 +8,6 @@ function<SessionRef(void)> factory = make_shared<ServerSession>;
 int main()
 {
     //윈속 초기화
-    PacketHandler::Init();
-
     SocketUtils::Init();
 
     ServerServiceRef service = make_shared<ServerService>(Address(L"127.0.0.1", 5000), factory);

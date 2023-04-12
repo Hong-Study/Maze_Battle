@@ -78,6 +78,9 @@
     <ClCompile Include="PacketType.cpp">
       <Filter>Packet</Filter>
     </ClCompile>
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SocketUtils.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Container.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>Packet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

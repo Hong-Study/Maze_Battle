@@ -3,16 +3,17 @@
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/qgraphicsScene>
-
 //#include <fmod.hpp>
-#include <array>
 
 int main(int argc, char* argv[]){
 
 	QApplication a(argc, argv);
 
-	QGraphicsView view;
-	Menu menu(&view);
+	MENU->Start();
 
-	return a.exec();
+	a.exec();
+
+	MENU->Clear();
+
+	return 0;
 }

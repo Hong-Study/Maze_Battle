@@ -17,5 +17,7 @@ public:
 
 private:
 	map<int32, int32> _rooms;
+	map<int32, string> _hostName;
+	map<int32, string> _clientName;
 	map<int32, shared_ptr<class MapInfo>> _gameMaps;
 };

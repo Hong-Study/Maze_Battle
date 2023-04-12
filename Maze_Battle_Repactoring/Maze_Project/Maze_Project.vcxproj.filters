@@ -40,6 +40,9 @@
     <ClCompile Include="Macro.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="Macro.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

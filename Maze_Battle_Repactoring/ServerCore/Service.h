@@ -23,7 +23,7 @@ class ClientService : public Service
 public:
 	ClientService(Address addr, SessionFactory factory);
 	virtual ~ClientService() { }
-	void Connect();
+	bool Connect();
 	virtual void Start() override;
 
 	int32 Send(SendBufferRef buf);

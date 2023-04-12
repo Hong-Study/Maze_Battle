@@ -1,27 +1,28 @@
 #include "pch.h"
 #include "Menu.h"
+#include "NetworkManager.h"
 
 #include <QtCore/qdebug.h>
 #include <string>
 
-Menu::Menu(QGraphicsView* view)
-	: _view(view)
+void Menu::Init()
 {
-	NETWORK->Init();
-
-	Set_Menu();
+	_view = new QGraphicsView();
 
 	Loby_Init();
 	Menu_Init();
+}
+
+void Menu::Start()
+{
 	Show_Menu();
 
-	Socket_init();
 	_view->show();
 }
 
-Menu::~Menu()
+void Menu::Clear()
 {
-	isLoop = false;
+	xdelete(_view);
 }
 
 void Menu::Set_Loby()
@@ -98,7 +99,7 @@ void Menu::Menu_Init()
 	Connect = QGraphicsScene::connect(&_button2, SIGNAL(clicked()), this, SLOT(Show_Menu()));
 	QGraphicsScene::connect(&_Create_Button, SIGNAL(clicked()), this, SLOT(Create_Room()));
 
-	QGraphicsScene::connect(&_In_Button, SIGNAL(clicked()), this, SLOT(Loby_Show()));
+	QGraphicsScene::connect(&_In_Button, SIGNAL(clicked()), this, SLOT(Loby_Sho()));
 	QGraphicsScene::connect(&_button, SIGNAL(clicked()), this, SLOT(Start_Game()));
 }
 
@@ -128,7 +129,6 @@ void Menu::Loby_Init()
 	QGraphicsScene::connect(_Loby_Button, SIGNAL(buttonClicked(int)), this, SLOT(InSide_Room(int)));
 }
 
-
 //void Menu::Start_Game()
 //{
 //	int _size = Networking::user.loby.Level;
@@ -150,134 +150,86 @@ void Menu::Loby_Init()
 //		_view->update();
 //	}
 //}
+//
+//void Menu::InSide_Room(int i)
+//{
+//	disconnect(Connect);
+//
+//	Connect = QGraphicsScene::connect(&_button2, SIGNAL(clicked()), this, SLOT(Loby_Show()));
+//	Connect = QGraphicsScene::connect(this, SIGNAL(start()), this, SLOT(Start_Game()));
+//
+//	Networking::SetData(2, i, 2, Networking::user.loby.name);
+//	int retVal = send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
+//
+//	if (retVal == SOCKET_ERROR)
+//		Networking::err_quit("Loby Send");
+//	retVal = recv(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), retVal, 0);
+//
+//	if (retVal == SOCKET_ERROR)
+//		Networking::err_quit("Loby Recv");
+//
+//	if (Networking::user.loby.RoomNumber == -1) {
+//		Loby_Show();
+//	}
+//	else {
+//		_Host_Information.setText(Networking::user.loby.name.c_str());
+//		_button.hide();
+//
+//		Create_Thread();
+//		Set_Room();
+//	}
+//}
+//
+//
+////规 肺厚 涝厘
+//void Menu::Loby_Show()
+//{	
+//	int _check = _Level_INPUT.text().toInt();
+//	if (_check > 1 && _check < 6) {
+//		if (isLoop == true) {
+//			tmp.Type = -1;
+//			::send(Networking::user.socket, reinterpret_cast<char*>(&tmp), sizeof(tmp), 0);
+//
+//			isLoop = false;
+//		}
+//		else {
+//			Socket_init();
+//
+//			if (::connect(Networking::user.socket, reinterpret_cast<SOCKADDR*>(&Networking::user.sockaddr), sizeof(SOCKADDR_IN))) {
+//				Networking::err_quit("Connect");
+//				return;
+//			}
+//		}
+//		string name = _NAME_INPUT.text().toStdString();
+//		int Level = _Level_INPUT.text().toInt();
+//		Networking::SetData(2, -1, Level, name);
+//
+//		Recv_Data();
+//		Set_Loby();
+//	}
+//}
 
-void Menu::InSide_Room(int i)
-{
-	disconnect(Connect);
-
-	Connect = QGraphicsScene::connect(&_button2, SIGNAL(clicked()), this, SLOT(Loby_Show()));
-	Connect = QGraphicsScene::connect(this, SIGNAL(start()), this, SLOT(Start_Game()));
-
-	Networking::SetData(2, i, 2, Networking::user.loby.name);
-	int retVal = send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
-	if (retVal == SOCKET_ERROR)
-		Networking::err_quit("Loby Send");
-	retVal = recv(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), retVal, 0);
-	if (retVal == SOCKET_ERROR)
-		Networking::err_quit("Loby Recv");
-	if (Networking::user.loby.RoomNumber == -1) {
-		Loby_Show();
-	}
-	else {
-		_Host_Information.setText(Networking::user.loby.name.c_str());
-		_button.hide();
-
-		Create_Thread();
-		Set_Room();
-	}
-}
-
-//规 肺厚 涝厘
-void Menu::Loby_Show()
-{	
-	int _check = _Level_INPUT.text().toInt();
-	if (_check > 1 && _check < 6) {
-		if (isLoop == true) {
-			tmp.Type = -1;
-			::send(Networking::user.socket, reinterpret_cast<char*>(&tmp), sizeof(tmp), 0);
-
-			isLoop = false;
-		}
-		else {
-			Socket_init();
-
-			if (::connect(Networking::user.socket, reinterpret_cast<SOCKADDR*>(&Networking::user.sockaddr), sizeof(SOCKADDR_IN))) {
-				Networking::err_quit("Connect");
-				return;
-			}
-		}
-		string name = _NAME_INPUT.text().toStdString();
-		int Level = _Level_INPUT.text().toInt();
-		Networking::SetData(2, -1, Level, name);
-
-		Recv_Data();
-		Set_Loby();
-	}
-}
-
-//规 积己
-void Menu::Create_Room() 
-{
-	int _check = _Level_INPUT.text().toInt();
-	if (_check > 1 && _check < 6) {
-		Socket_init();
-
-		if (::connect(Networking::user.socket, (SOCKADDR*)(&Networking::user.sockaddr), sizeof(SOCKADDR_IN))) {
-			Networking::err_quit("Connect");
-			return;
-		}
-
-		string name = _NAME_INPUT.text().toStdString();
-		int Level = _Level_INPUT.text().toInt();
-		Networking::SetData(1, 1, Level, name);
-
-		int retVal = ::send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
-		if (retVal == SOCKET_ERROR)
-			Networking::err_quit("Send");
-		int number;
-		retVal = ::recv(Networking::user.socket, reinterpret_cast<char*>(&number), sizeof(int), 0);
-		Networking::user.loby.RoomNumber = number;
-		_Host_Information.setText(Networking::user.loby.name.c_str());
-		Create_Thread();
-		Set_Room();
-	}
-}
+////规 积己
+//void Menu::Create_Room() 
+//{
+//	int _check = _Level_INPUT.text().toInt();
+//	if (_check > 1 && _check < 6) {
+//		string name = _NAME_INPUT.text().toStdString();
+//		int Level = _Level_INPUT.text().toInt();
+//		Networking::SetData(1, 1, Level, name);
+//
+//		int retVal = ::send(Networking::user.socket, reinterpret_cast<char*>(&Networking::user.loby), sizeof(Networking::user.loby), 0);
+//		if (retVal == SOCKET_ERROR)
+//			Networking::err_quit("Send");
+//		int number;
+//		retVal = ::recv(Networking::user.socket, reinterpret_cast<char*>(&number), sizeof(int), 0);
+//		Networking::user.loby.RoomNumber = number;
+//		_Host_Information.setText(Networking::user.loby.name.c_str());
+//		Create_Thread();
+//		Set_Room();
+//	}
+//}
 void Menu::Show_Menu()
 {
-	Networking::user.loby.GameStart = false;
-	Networking::user.loby.Win = false;
-
-	isLoop = false;
-	Networking::Close();
-
 	Set_Menu();
-}
-
-void Menu::Create_Thread()
-{
-	isLoop = true;
-	std::thread t1 = std::thread([=]() {
-		while (true) {
-			int retVal = recv(Networking::user.socket, reinterpret_cast<char*>(&tmp), BUFSIZE, 0);			
-
-			if (isLoop == false)
-				break;
-
-			if (retVal == SOCKET_ERROR) {
-				Networking::err_quit("Recv()");
-				continue;
-			}
-
-			if (tmp.Type == -1 && Networking::user.loby.Type == 2)
-				break;
-			else if (tmp.Type == -1) {
-				_Client_Information.setText("");
-				Networking::user.loby.Enemy = false;
-			}
-			else if (tmp.Type == 3) {
-				Networking::user.loby.GameStart = tmp.GameStart;
-				if (tmp.GameStart) {
-					start();
-					break;
-				}
-			}
-			else {
-				Networking::user.loby.Enemy = true;
-				_Client_Information.setText(tmp.name.c_str());
-			}
-		}
-		_Client_Information.setText("");
-		return;
-		});
-	t1.detach();
 }

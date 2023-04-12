@@ -1,6 +1,6 @@
 #pragma once
 
-enum class PKT_TYPE {
+enum PKT_TYPE {
 	LOGIN
 	, GAME_READY
 	, GAME_START
@@ -24,7 +24,7 @@ struct S_LobyInside
 	struct LobyInfo
 	{
 		uint32 id;
-
+		uint8 size;
 		string name;
 	};
 
@@ -46,30 +46,27 @@ struct S_RoomCreate
 
 struct C_RoomCreate
 {
+	C_RoomCreate() { }
+	C_RoomCreate(uint16 id, uint8 level, string name)
+		: id(id), level(level), name(name), nameSize(name.length()) {}
+
 	uint16 id;
 	uint8 level;
+	uint8 nameSize;
+	string name;
 };
 
 struct S_RoomInside
 {
 	uint16 id;
 	uint16 hostId;
-	
+	uint8 level;
+	uint8 roomNum;
 };
 
 struct C_RoomInside
 {
 	uint16 id;
-	uint8 roomNum;
-
-};
-
-struct userInfo
-{
-	uint16 id;
-};
-struct RoomInfo
-{
 	uint8 roomNum;
 };
 #pragma pack()

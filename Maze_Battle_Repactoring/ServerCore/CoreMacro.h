@@ -49,6 +49,22 @@ public:													\
 		return &instance;								\
 	}													\
 
+//#define SINGLETON_SUPER(classname, supername)			\
+//private:												\
+//	classname() {}										\
+//	classname(const classname& tmp) {}					\
+//	classname& operator=(const classname& tmp) { }		\
+//	~classname() {}										\
+//	static supername* instance;							\
+//public:													\
+//	static supername* GetInstance() {					\
+//		if(instance == nullptr){						\
+//			instance = new classname();					\
+//			instance->Init();							\
+//		}												\
+//		return instance;								\
+//	}													\
+
 #define GET_SINGLE(classname)	classname::GetInstance()
 
 #define THREAD					GET_SINGLE(ThreadManager)

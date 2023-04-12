@@ -10,9 +10,8 @@ void NetworkManager::Init()
 
 	service = make_shared<ClientService>(Address(L"127.0.0.1", 5000), factory);
 
-	service->Connect();
-
-	service->Start();
+	if(service->Connect())
+		service->Start();
 }
 
 void NetworkManager::Start()

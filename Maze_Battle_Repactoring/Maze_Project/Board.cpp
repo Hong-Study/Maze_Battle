@@ -1,6 +1,6 @@
-//#include "Board.h"
-//#include "pch.h"
-//
+#include "Board.h"
+#include "pch.h"
+
 //#include <random>
 //#include <QtCore/qdebug.h>
 //#include <Qt3DInput/QKeyEvent.h>

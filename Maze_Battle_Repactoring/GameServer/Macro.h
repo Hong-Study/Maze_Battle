@@ -3,4 +3,5 @@
 #define BUFSIZE 512
 #define PORT 9000
 
-#define ROOM GET_SINGLE(ROOM)
+#define ROOM	GET_SINGLE(Room)
+#define HANDLER GET_SINGLE(ServerPacketHandler)

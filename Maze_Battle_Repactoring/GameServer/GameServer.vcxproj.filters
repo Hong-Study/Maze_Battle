@@ -30,7 +30,7 @@
     <ClCompile Include="ServerSession.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="PacketHandler.cpp">
+    <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="Macro.cpp">
@@ -53,7 +53,7 @@
     <ClInclude Include="ServerSession.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="PacketHandler.h">
+    <ClInclude Include="ServerPacketHandler.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h">

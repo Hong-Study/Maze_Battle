@@ -26,15 +26,19 @@ ClientService::ClientService(Address addr, SessionFactory factory)
 }
 
 
-void ClientService::Connect()
+bool ClientService::Connect()
 {
 	SOCKET socket = SocketUtils::CreateSocket();
 
-	if (socket == INVALID_SOCKET)
+	if (socket == INVALID_SOCKET) {
 		cout << "Socket Create Failed" << endl;
+		return false;
+	}
 
-	if (SocketUtils::NonBlockingSet(socket))
+	if (SocketUtils::NonBlockingSet(socket)) {
 		cout << "CreateListenSocket Failed" << endl;
+		return false;
+	}
 
 	while (true)
 	{
@@ -46,17 +50,20 @@ void ClientService::Connect()
 			// 이미 연결된 상태라면 break
 			if (::WSAGetLastError() == WSAEISCONN)
 				break;
-			// Error
-			break;
+			return false;
 		}
 	}
 
 	_event = ::WSACreateEvent();
-	if (SOCKET_ERROR == ::WSAEventSelect(socket, _event, FD_WRITE | FD_READ | FD_CLOSE))
+	if (SOCKET_ERROR == ::WSAEventSelect(socket, _event, FD_WRITE | FD_READ | FD_CLOSE)) {
 		cout << "EventSlect Failed" << endl;
+		return false;
+	}
 
 	_session = _factory();
 	SessionSetting(_session, socket, _addr, _event);
+
+	return true;
 }
 
 void ClientService::Close()
