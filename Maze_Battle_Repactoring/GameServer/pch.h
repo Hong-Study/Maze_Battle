@@ -8,7 +8,8 @@
 #pragma comment(lib, "Lib\\ServerCore\\Release\\ServerCore.lib")
 #endif
 
-#include "CorePch.h"
+#include <pch.h>
+
 #include "Consts.h"
 #include "Macro.h"
 

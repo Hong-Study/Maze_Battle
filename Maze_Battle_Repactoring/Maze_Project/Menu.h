@@ -43,8 +43,8 @@ private slots:
 	////게임 시작
 	//void Start_Game();
 
-//public:
-//	void Show_Room();
+public:
+	void Show_Room();
 	
 private:
 	QGraphicsView* _view;

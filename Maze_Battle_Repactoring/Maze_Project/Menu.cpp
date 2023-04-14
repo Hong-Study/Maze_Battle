@@ -125,8 +125,8 @@ void Menu::Loby_Init()
 
 	_Reset_Button.setText("Reset");
 	_Reset_Button.setGeometry(10, 350, 50, 25);
-	QGraphicsScene::connect(&_Reset_Button, SIGNAL(clicked()), this, SLOT(Recv_Data()));
-	QGraphicsScene::connect(_Loby_Button, SIGNAL(buttonClicked(int)), this, SLOT(InSide_Room(int)));
+	/*QGraphicsScene::connect(&_Reset_Button, SIGNAL(clicked()), this, SLOT(Recv_Data()));
+	QGraphicsScene::connect(_Loby_Button, SIGNAL(buttonClicked(int)), this, SLOT(InSide_Room(int)));*/
 }
 
 //void Menu::Start_Game()
@@ -231,5 +231,5 @@ void Menu::Loby_Init()
 //}
 void Menu::Show_Menu()
 {
-	Set_Menu();
+	Set_Room();
 }

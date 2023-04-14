@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma pack(1)
 enum PKT_TYPE {
 	LOGIN
 	, GAME_READY
@@ -12,7 +13,7 @@ enum PKT_TYPE {
 	, COUNT
 };
 
-#pragma pack(1)
+
 struct PacketHeader
 {
 	uint16 size;
@@ -32,7 +33,7 @@ struct S_LobyInside
 	uint16 count;
 };
 
-struct C_LobyInside
+struct S_GameLogin
 {	
 	uint16 id;
 };
@@ -46,7 +47,7 @@ struct S_RoomCreate
 
 struct C_RoomCreate
 {
-	C_RoomCreate() { }
+	C_RoomCreate() : id(0), level(0), nameSize(0) { }
 	C_RoomCreate(uint16 id, uint8 level, string name)
 		: id(id), level(level), name(name), nameSize(name.length()) {}
 

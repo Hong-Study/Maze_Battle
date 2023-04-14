@@ -1,23 +1,17 @@
 #pragma once
+#include "PacketHandler.h"
 
-using Func = std::function<bool(BYTE*, uint32, SessionRef)>;
-extern Func func[(int)PKT_TYPE::COUNT];
-
-class ClientPacketHandler
+class ClientPacketHandler : public PacketHandler
 {
-public:
-	static void Init();
-	static bool Dispatch(BYTE* buffer, uint32 len, SessionRef ref);
+	SINGLETON(ClientPacketHandler)
 
 private:
-	static bool HandlerRoomCreate(BYTE* buffer, uint32 len, SessionRef ref);
+	virtual bool HandlerRoomCreate(BYTE* buffer, uint32 len, SessionRef ref) override;
+	virtual bool HandlerLogin(BYTE* buffer, uint32 len, SessionRef ref) override;
 
 public:
 	template<typename T>
 	SendBufferRef MakeSendBuffer(T&& data, PKT_TYPE type);
-
-	template<>
-	SendBufferRef MakeSendBuffer(C_LobyInside&& data, PKT_TYPE type);
 
 	template<>
 	SendBufferRef MakeSendBuffer(C_RoomCreate&& data, PKT_TYPE type);
@@ -37,12 +31,6 @@ inline SendBufferRef ClientPacketHandler::MakeSendBuffer(T&& data, PKT_TYPE type
 	ref->Close(w.WriteSize());
 
 	return ref;
-}
-
-template<>
-inline SendBufferRef ClientPacketHandler::MakeSendBuffer(C_LobyInside&& data, PKT_TYPE type)
-{
-	return SendBufferRef();
 }
 
 template<>

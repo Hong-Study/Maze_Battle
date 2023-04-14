@@ -11,10 +11,10 @@ bool ServerPacketHandler::HandlerRoomCreate(BYTE* buffer, uint32 len, SessionRef
 
 	cout << room.name << endl;
 
-	return false;
+	return true;
 }
 
 bool ServerPacketHandler::HandlerLogin(BYTE* buffer, uint32 len, SessionRef ref)
 {
-	return false;
+	return true;
 }

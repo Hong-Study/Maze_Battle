@@ -8,3 +8,4 @@
 #define MENU	GET_SINGLE(Menu)
 
 #define NETSOCK	NETWORK->GetService()
+#define HANDLER GET_SINGLE(ClientPacketHandler)
