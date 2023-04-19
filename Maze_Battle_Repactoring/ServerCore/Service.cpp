@@ -120,8 +120,8 @@ int32 ClientService::Send(SendBufferRef buf)
 	return _session->Send(buf);
 }
 
-ServerService::ServerService(Address addr, SessionFactory factory)
-	: Super(addr, factory)
+ServerService::ServerService(Address addr, SessionFactory factory, int32 m)
+	: Super(addr, factory), _miliSecond(m)
 {
 	_sessions.reserve(100);
 }
@@ -156,74 +156,109 @@ void ServerService::Listen()
 
 void ServerService::Start()
 {	
-	while (true)
-	{
-		int32 index = ::WSAWaitForMultipleEvents(_wsaEvents.size(), &_wsaEvents[0], FALSE, WSA_INFINITE, FALSE);
-		if (index == WSA_WAIT_FAILED)
-			continue;
+	bool expected = false;
+	bool desired = true;
 
-		index -= WSA_WAIT_EVENT_0;
-		WSANETWORKEVENTS networkEvent;
-
-		if (::WSAEnumNetworkEvents(_sessions[index]->GetSocket(), _wsaEvents[index], &networkEvent) == SOCKET_ERROR)
-			continue;
-		
-		if (networkEvent.lNetworkEvents & FD_ACCEPT)
+	if (_IsStart.compare_exchange_weak(expected, desired)) {
+		if (_thread == nullptr) 
 		{
-			if (networkEvent.iErrorCode[FD_ACCEPT_BIT] != 0)
-				continue;
+			_thread = xnew<thread>([=]()
+				{
+					while (_IsStart.load())
+					{
+						int32 index = ::WSAWaitForMultipleEvents(_wsaEvents.size(), &_wsaEvents[0], FALSE, _miliSecond, FALSE);
+						if (index == WSA_WAIT_FAILED || index == WSA_WAIT_TIMEOUT)
+							continue;
 
-			SOCKADDR_IN addr;
-			int32 addrLen = sizeof(addr);
+						index -= WSA_WAIT_EVENT_0;
+						WSANETWORKEVENTS networkEvent;
 
-			SOCKET clientSocket = ::accept(_sessions[index]->GetSocket(), (SOCKADDR*)&addr, &addrLen);
-			if (clientSocket != INVALID_SOCKET)
-			{
-				WSAEVENT clientEvent = ::WSACreateEvent();
-				if (SOCKET_ERROR == ::WSAEventSelect(clientSocket, clientEvent, FD_WRITE | FD_READ | FD_CLOSE))
-					cout << "Event Select Error" << endl;
-				
-				SessionRef session = _factory();
-				SessionSetting(session, clientSocket, _addr, clientEvent);
+						if (::WSAEnumNetworkEvents(_sessions[index]->GetSocket(), _wsaEvents[index], &networkEvent) == SOCKET_ERROR)
+							continue;
 
-				_sessions.push_back(session);
-				_wsaEvents.push_back(clientEvent);
+						if (networkEvent.lNetworkEvents & FD_ACCEPT)
+						{
+							if (networkEvent.iErrorCode[FD_ACCEPT_BIT] != 0)
+								continue;
 
-				cout << "Connect Success" << endl;
-			}
-			else 
-			{
-				cout << "Accept Failed" << endl;
-			}
+							SOCKADDR_IN addr;
+							int32 addrLen = sizeof(addr);
+
+							SOCKET clientSocket = ::accept(_sessions[index]->GetSocket(), (SOCKADDR*)&addr, &addrLen);
+							if (clientSocket != INVALID_SOCKET)
+							{
+								WSAEVENT clientEvent = ::WSACreateEvent();
+								if (SOCKET_ERROR == ::WSAEventSelect(clientSocket, clientEvent, FD_WRITE | FD_READ | FD_CLOSE))
+									cout << "Event Select Error" << endl;
+
+								SessionRef session = _factory();
+								SessionSetting(session, clientSocket, _addr, clientEvent);
+
+								_sessions.push_back(session);
+								_wsaEvents.push_back(clientEvent);
+
+								cout << "Connect Success" << endl;
+							}
+							else
+							{
+								cout << "Accept Failed" << endl;
+							}
+						}
+
+						if (networkEvent.lNetworkEvents & FD_READ)
+						{
+							if ((networkEvent.lNetworkEvents & FD_READ) && (networkEvent.iErrorCode[FD_READ_BIT] != 0)) {
+								cout << "Continue" << endl;
+								continue;
+							}
+
+							SessionRef session = _sessions[index];
+							if (session->Recv() == SOCKET_ERROR)
+							{
+								cout << "Recv Error" << endl;
+
+								Disconnect(index);
+							}
+						}
+
+						if (networkEvent.lNetworkEvents & FD_CLOSE)
+						{
+							Disconnect(index);
+						}
+					}
+				}
+			);
 		}
+	}
+}
 
-		if (networkEvent.lNetworkEvents & FD_READ)
+void ServerService::Close()
+{
+	bool expected = true;
+	bool desired = false;
+
+	if (_IsStart.compare_exchange_weak(expected, desired)) {
+		_thread->join();
+
+		for (int i = 1; i < _sessions.size(); i++)
 		{
-			if ((networkEvent.lNetworkEvents & FD_READ) && (networkEvent.iErrorCode[FD_READ_BIT] != 0)) {
-				cout << "Continue" << endl;
-				continue;
-			}
-
-			SessionRef session = _sessions[index];
-			if (session->Recv() == SOCKET_ERROR)
-			{
-				cout << "Recv Error" << endl;
-				
-				Disconnect(index);
-			}
+			if (_sessions[i]->IsConnected())
+				SocketUtils::Close(_sessions[i]->GetSocket());
 		}
+		_sessions.clear();
+		_wsaEvents.clear();
+		_sessions.reserve(100);
 
-		if (networkEvent.lNetworkEvents & FD_CLOSE)
-		{
-			Disconnect(index);
-		}
+		Listen();
+		xdelete(_thread);
 	}
 }
 
 void ServerService::Disconnect(int32 index)
 {
 	cout << "Delete " << index << endl;
-
+	if(_sessions[index]->IsConnected())
+		SocketUtils::Close(_sessions[index]->GetSocket());
 	_sessions.erase(_sessions.begin() + index);
 	_wsaEvents.erase(_wsaEvents.begin() + index);
 }

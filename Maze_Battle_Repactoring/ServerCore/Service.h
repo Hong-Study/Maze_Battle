@@ -11,7 +11,8 @@ public:
 
 	void SessionSetting(SessionRef session, SOCKET socket, Address& addr, WSAEVENT event);
 	virtual void Start() abstract;
-	
+	virtual void Close() abstract;
+
 protected:
 	SessionFactory		_factory;
 	Address				_addr;
@@ -25,10 +26,9 @@ public:
 	virtual ~ClientService() { }
 	bool Connect();
 	virtual void Start() override;
+	virtual void Close() override;
 
 	int32 Send(SendBufferRef buf);
-private:
-	void Close();
 
 private:
 	SessionRef _session;
@@ -39,15 +39,20 @@ class ServerService : public Service
 {
 	using Super = Service;
 public:
-	ServerService(Address addr, SessionFactory factory);
-	virtual ~ServerService() { _sessions.clear(); _wsaEvents.clear(); }
+	ServerService(Address addr, SessionFactory factory, int32 miliSecond = 10);
+	virtual ~ServerService() { Close();}
 
 	void Listen();
 	virtual void Start() override;
+	virtual void Close() override;
 
 private:
 	void Disconnect(int32 index);
 
+private:
 	vector<SessionRef>	_sessions;
 	vector<WSAEVENT>	_wsaEvents;
+	atomic<bool>		_IsStart = false;
+	int32				_miliSecond = 0;
+	thread*				_thread = nullptr;
 };

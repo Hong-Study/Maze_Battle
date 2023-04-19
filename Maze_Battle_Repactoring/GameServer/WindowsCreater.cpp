@@ -10,11 +10,11 @@ void WindowsCreater::Init()
 {
     SocketUtils::Init();
 
-    _service = make_shared<ServerService>(Address(L"127.0.0.1", 5000), Serverfactory);
+    _service = make_shared<ServerService>(Address(L"127.0.0.1", 5000), Serverfactory, 10);
+    _service->Listen();
 
     _desc.appName = L"GameServer";
     _desc.vsync = false;
-    _desc.hWnd = NULL;
     _desc.width = 800;
     _desc.height = 600;
 }
@@ -107,6 +107,11 @@ LRESULT CALLBACK WindowsCreater::DlgProc(HWND hDlg, UINT iMessage, WPARAM wParam
             PostQuitMessage(0);
             return TRUE;
         case IDC_START:
+            SERVICE->Start();
+            return TRUE;
+
+        case IDC_CLOSE:
+            SERVICE->Close();
             return TRUE;
         default:
             return TRUE;

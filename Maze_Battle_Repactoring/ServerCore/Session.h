@@ -18,7 +18,7 @@ public:
 	virtual int32	OnRecv(BYTE* buffer, int32 len) { return len; }
 	
 public:
-	SOCKET			GetSocket() { return _socket; }
+	SOCKET&			GetSocket() { return _socket; }
 	void			SetSocket(SOCKET socket) { _socket = socket; }
 	WSAEVENT		GetEvent() { return _event; }
 	void			SetEvent(WSAEVENT event) { _event = event; }
@@ -27,6 +27,7 @@ public:
 	ServiceRef		GetService() { return _serviceRef; }
 	void			SetService(ServiceRef ref) { _serviceRef = ref; }
 	bool			IsConnected() { return _socket != SOCKET_ERROR; }
+
 private:
 	SOCKET			_socket = SOCKET_ERROR;
 	WSAEVENT		_event = 0;

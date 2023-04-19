@@ -7,9 +7,6 @@
     <Filter Include="Network">
       <UniqueIdentifier>{0aae312c-463d-44d3-b81a-67ba6e733df2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Packet">
-      <UniqueIdentifier>{7b94ae59-2998-4970-aa07-84aba3ce5efa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Buffer">
       <UniqueIdentifier>{975eecab-8254-4b5e-9691-54a70ae8ce30}</UniqueIdentifier>
     </Filter>
@@ -18,6 +15,9 @@
     </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{d48d8c3e-cd61-40a9-96d9-9ed58a465dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{7b94ae59-2998-4970-aa07-84aba3ce5efa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
