@@ -5,3 +5,5 @@
 
 #define ROOM	GET_SINGLE(Room)
 #define HANDLER GET_SINGLE(ServerPacketHandler)
+#define WINDOW	GET_SINGLE(WindowsCreater)
+#define SERVICE	WINDOW->GetService()

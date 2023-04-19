@@ -15,7 +15,7 @@ shared_ptr<Room> RoomManager::PushHost(int32 id, string name, SessionRef ref, ui
     if (!CheckIndex(id))
         return nullptr;
 
-    _rooms[id] = ObjectPool<Room>::MakeShared(Info{ id, name, ref });
+    _rooms[id] = ObjectPool<Room>::MakeShared(Info{ id, name, ref }, mapLevel);
     return _rooms[id];
 }
 

@@ -13,6 +13,9 @@
     <Filter Include="Network">
       <UniqueIdentifier>{b24e7365-c436-415b-becd-b6e647f583d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{4827a664-626d-45ad-8d97-eb62caa6a2b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -35,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Macro.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsCreater.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,5 +65,16 @@
     <ClInclude Include="Macro.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsCreater.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

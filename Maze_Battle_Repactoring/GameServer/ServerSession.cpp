@@ -15,7 +15,7 @@ ServerSession::~ServerSession()
 
 void ServerSession::OnConnected()
 {
-	HANDLER->MakeSendBuffer(S_GameLogin)
+	//HANDLER->MakeSendBuffer(S_GameLogin)
 }
 
 void ServerSession::OnDisconnected()

@@ -12,7 +12,4 @@
 
 #include "Consts.h"
 #include "Macro.h"
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<thread>
+#include "resource.h"
