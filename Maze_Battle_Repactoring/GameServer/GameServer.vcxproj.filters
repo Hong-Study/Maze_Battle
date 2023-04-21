@@ -7,74 +7,86 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{37e6aaa6-0769-426b-aa67-d42e60cd791c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CreateMap">
-      <UniqueIdentifier>{955543b9-0e70-46a6-bca0-87bdd0d6aae0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{b24e7365-c436-415b-becd-b6e647f583d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
+    <Filter Include="Manager">
+      <UniqueIdentifier>{0cf17171-ef28-4e6c-a136-405f978ab110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Resources">
       <UniqueIdentifier>{4827a664-626d-45ad-8d97-eb62caa6a2b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Map">
+      <UniqueIdentifier>{955543b9-0e70-46a6-bca0-87bdd0d6aae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Pch">
+      <UniqueIdentifier>{a440dcc9-7bcb-4e00-9638-87f541fd948e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="MapInfo.cpp">
-      <Filter>CreateMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerSession.cpp">
-      <Filter>Main</Filter>
+      <Filter>Utils\Map</Filter>
     </ClCompile>
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="Macro.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="WindowsManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsCreater.cpp">
-      <Filter>Resources</Filter>
+    <ClCompile Include="Macro.cpp">
+      <Filter>Utils\Pch</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utils\Pch</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSession.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="MapInfo.h">
-      <Filter>CreateMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Consts.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerSession.h">
-      <Filter>Main</Filter>
+      <Filter>Utils\Map</Filter>
     </ClInclude>
     <ClInclude Include="ServerPacketHandler.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Resources</Filter>
+      <Filter>Utils\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsCreater.h">
-      <Filter>Resources</Filter>
+    <ClInclude Include="WindowsManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Utils\Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Utils\Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="Consts.h">
+      <Filter>Utils\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSession.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
-      <Filter>Resources</Filter>
+      <Filter>Utils\Resources</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

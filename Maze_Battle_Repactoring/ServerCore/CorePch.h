@@ -30,6 +30,7 @@ using namespace std;
 #include "SocketUtils.h"
 #include "ThreadManager.h"
 #include "Memory.h"
+#include "ObjectPool.h"
 
 #include "Address.h"
 #include "Session.h"

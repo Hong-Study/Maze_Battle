@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "WindowsCreater.h"
+#include "WindowsManager.h"
 #include "ServerSession.h"
 #include "Service.h"
 #include "PacketHandler.h"
 
 function<SessionRef(void)> Serverfactory = make_shared<ServerSession>;
 
-void WindowsCreater::Init()
+void WindowsManager::Init()
 {
     SocketUtils::Init();
 
@@ -19,20 +19,20 @@ void WindowsCreater::Init()
     _desc.height = 600;
 }
 
-bool WindowsCreater::Run(HINSTANCE hInstance, int32 nCmdShow)
+bool WindowsManager::Run(HINSTANCE hInstance, int32 nCmdShow)
 {
     _desc.hInstance = hInstance;
     _desc.cmdShow = nCmdShow;
     return Start();
 }
 
-bool WindowsCreater::Run(ServerDesc& desc)
+bool WindowsManager::Run(ServerDesc& desc)
 {
     _desc = desc;
     return Start();
 }
 
-bool WindowsCreater::Start()
+bool WindowsManager::Start()
 {
     MyRegisterClass();
 
@@ -51,7 +51,7 @@ bool WindowsCreater::Start()
     return (int)msg.wParam;
 }
 
-ATOM WindowsCreater::MyRegisterClass()
+ATOM WindowsManager::MyRegisterClass()
 {
     WNDCLASSEXW wcex;
 
@@ -72,7 +72,7 @@ ATOM WindowsCreater::MyRegisterClass()
     return RegisterClassExW(&wcex);
 }
 
-BOOL WindowsCreater::InitInstance()
+BOOL WindowsManager::InitInstance()
 {
     RECT windowRect = { 0, 0, _desc.width, _desc.height };
 
@@ -91,7 +91,7 @@ BOOL WindowsCreater::InitInstance()
     return true;
 }
 
-LRESULT CALLBACK WindowsCreater::DlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowsManager::DlgProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
     switch (iMessage) {
     case WM_INITDIALOG:

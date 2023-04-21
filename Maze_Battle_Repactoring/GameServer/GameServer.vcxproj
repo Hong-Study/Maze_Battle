@@ -165,6 +165,7 @@
     <ClCompile Include="MapInfo.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="Macro.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ServerPacketHandler.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -174,18 +175,19 @@
     </ClCompile>
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="ServerSession.cpp" />
-    <ClCompile Include="WindowsCreater.cpp" />
+    <ClCompile Include="WindowsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consts.h" />
     <ClInclude Include="MapInfo.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ServerPacketHandler.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="ServerSession.h" />
-    <ClInclude Include="WindowsCreater.h" />
+    <ClInclude Include="WindowsManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

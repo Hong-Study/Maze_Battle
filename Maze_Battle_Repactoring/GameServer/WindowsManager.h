@@ -15,9 +15,9 @@ struct ServerDesc
     bool windowed = true;
 };
 
-class WindowsCreater
+class WindowsManager
 {
-    SINGLETON(WindowsCreater)
+    SINGLETON(WindowsManager)
 public:
     void Init();
     bool Run(HINSTANCE hInstance, int32 nCmdShow);
